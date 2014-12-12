@@ -16,7 +16,10 @@
 
 <div class="page-header">
 	<h1>Poczta św. Mikołaja :)</h1>
+
+	{% if is_authorized %}
 	<a href="{% url 'describe.views.logout_user' %}">Wyloguj</a>
+	{% endif %}
 </div>
 
 

@@ -25,7 +25,8 @@ def user_page(request):
 
     return render(request, 'describe/main_page.html', {'form': form,
                                                        'user': getUserName(request.user),
-                                                       'message': msg })
+                                                       'message': msg,
+                                                       'is_authorized': request.user.is_authenticated()})
 
 def logout_user(request):
     logout(request)
