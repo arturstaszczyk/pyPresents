@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}">
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
+	<link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="{% static 'my/css/style.css' %}">
+
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+
+<div class="page-header">
+	<h1>Poczta św. Mikołaja :)</h1>
+	<a href="{% url 'describe.views.logout_user' %}">Wyloguj</a>
+</div>
+
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

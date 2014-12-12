@@ -1,0 +1,25 @@
+{% extends 'describe/base.html' %}
+
+{% block content %}
+
+<div class="content">
+	<h1>Witaj {{ user }}</h1>
+
+	<div class="column">
+		<form method="POST">{% csrf_token %}
+			{% if message == "" %}
+				<p>{{ form.present_description.label_tag }}</p>
+			{% else %}
+				<p class="good-message">{{ message }}</p>
+			{% endif %}
+			{{ form.present_description }}
+			<br/>
+			<button type="submit" >Zapisz</button>
+		</form>
+	</div>
+
+	<div class="column">Jeszcze nikogo nie wylosowałaś</div>
+
+</div>
+
+{% endblock %}
