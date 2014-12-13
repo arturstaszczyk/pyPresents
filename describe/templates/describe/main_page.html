@@ -18,7 +18,16 @@
 		</form>
 	</div>
 
-	<div class="column">Jeszcze nikogo nie wylosowałaś</div>
+	<div class="column">
+		{% if giving_user == "" %}
+		<p>Jeszcze nikogo nie wylosowałaś</p>
+		<a class="big-link" href="{% url 'describe.views.randomize' user_pk=user_pk %}">---> Losuj <---</a>
+		{% else %}
+		<p>Kup prezent dla:</p>
+		<p>{{ giving_user }}</p>
+		<p>{{ giving_user_present }}</p>
+		{% endif %}
+	</div>
 
 </div>
 
