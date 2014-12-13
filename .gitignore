@@ -2,3 +2,4 @@ myenv
 .idea
 *.pyc
 *.iml
+Xmass/local_settings.py

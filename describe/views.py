@@ -8,56 +8,93 @@ from django.contrib.auth.decorators import login_required
 from describe.forms import *
 from django.core.exceptions import ObjectDoesNotExist
 
-def getUserName(user):
-    return user.first_name + " " + user.last_name
+#*---------------------------------------------------------------*#
+def _get_giving_user_data(giving_user_pk):
+    pass
 
-@login_required()
-def user_page(request):
+#*---------------------------------------------------------------*#
+def _save_person_form_changes(request, form):
+    saved = False
+    if request.method == "POST" and form.is_valid():
+        person_instance = form.save(commit=False)
+        person_instance.user_id = request.user
+        person_instance.save()
+        saved = True
 
+    return saved
+
+#*---------------------------------------------------------------*#
+def _get_person_model(request):
     try:
         person = PersonModel.objects.get(user_id=request.user.pk)
     except ObjectDoesNotExist:
-        person = None
-
-    msg = ""
-    form = PersonForm(request.POST or None, instance=person)
-    if request.method == "POST" and form.is_valid():
-        person = form.save(commit=False)
+        person = PersonModel()
         person.user_id = request.user
         person.save()
-        msg = "Zapisano twój wymarzony prezent."
 
+    return person
+
+#*---------------------------------------------------------------*#
+def _get_giving_data(user_pk):
     giving_user_name = ""
     giving_user_present = ""
     try:
-        giving_user_pk = RandomizationModel.objects.get(user_id=request.user.pk).giving
-        giving_user = User.objects.get(pk=giving_user_pk)
-        giving_user_name = getUserName(giving_user)
-        #giving_person = PersonModel.objects.get(user_id=giving_user_pk)
-        #giving_user_present = giving_person.present_description
+        giving_user_pk = RandomizationModel.objects.get(user_id=user_pk).giving
+        giving_person = PersonModel.objects.get(user_id=giving_user_pk)
+        giving_user_name = giving_person.get_user_name()
+        giving_user_present = giving_person.present_desc
     except:
-        pass
+        try:
+            giving_user_pk = RandomizationModel.objects.get(user_id=user_pk).giving
+            giving_user = User.objects.get(pk=giving_user_pk)
+            giving_user_name = PersonModel.get_user_name_static(giving_user)
+        except:
+            pass
 
+    return {'giving_user_name': giving_user_name,
+            'giving_user_present': giving_user_present}
 
-    return render(request, 'describe/main_page.html', {'form': form,
-                                                       'user': getUserName(request.user),
-                                                       'user_pk': request.user.pk,
-                                                       'message': msg,
-                                                       'is_authorized': request.user.is_authenticated(),
-                                                       'giving_user': giving_user_name,
-                                                       'giving_user_present': giving_user_present})
+#*---------------------------------------------------------------*#
+@login_required()
+def user_page(request):
+    ui_message = ""
 
-def getRandomUserNot(user_pk):
+    person = _get_person_model(request)
+    form = PersonForm(request.POST or None, instance=person)
+    if _save_person_form_changes(request, form):
+        ui_message = "Zapisano twój wymarzony prezent."
+
+    giving_user_data = _get_giving_data(request.user.pk)
+    template_data = {'form': form,
+                     'user_name': person.get_user_name(),
+                     'user_pk': person.user_id.pk,
+                     'ui_message': ui_message,
+                     'is_authorized': request.user.is_authenticated() }
+    template_data = dict(list(template_data.items()) + list(giving_user_data.items()))
+
+    return render(request, 'describe/main_page.html', template_data)
+
+#*---------------------------------------------------------------*#
+def _get_random_user_not_me(user_pk):
     all_users = list(User.objects.all())
     all_users_count = len(all_users)
-    rand = random.randint(0, all_users_count - 1)
+    rand = random.randint(1, all_users_count * 10000) % all_users_count
     rand_user_pk = all_users[rand].pk
 
-    if user_pk != rand_user_pk:
+    if user_pk != str(rand_user_pk):
         return rand_user_pk
 
     return None
 
+#*---------------------------------------------------------------*#
+def _save_randomization_between(user_pk, giving_pk):
+    randModel = RandomizationModel()
+    randModel.user_id = user_pk
+    randModel.giving = giving_pk
+    randModel.save()
+
+#*---------------------------------------------------------------*#
+@login_required()
 def randomize(request, user_pk):
 
     random.seed()
@@ -65,7 +102,10 @@ def randomize(request, user_pk):
     choosen_person = None
     while counter < 100 and choosen_person == None:
         counter += 1
-        giving_pk = getRandomUserNot(user_pk)
+        giving_pk = _get_random_user_not_me(user_pk)
+
+        if giving_pk == None:
+            continue
 
         can_give = True
         for model in RandomizationModel.objects.all():
@@ -76,13 +116,11 @@ def randomize(request, user_pk):
             choosen_person = User.objects.get(pk=giving_pk)
 
     if choosen_person:
-        randModel = RandomizationModel()
-        randModel.user_id = user_pk
-        randModel.giving = choosen_person.pk
-        randModel.save()
+        _save_randomization_between(user_pk, choosen_person.pk)
 
     return redirect('describe.views.user_page')
 
+#*---------------------------------------------------------------*#
 def logout_user(request):
     logout(request)
     return redirect('/');

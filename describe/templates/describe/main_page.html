@@ -3,29 +3,34 @@
 {% block content %}
 
 <div class="content">
-	<h1>Witaj {{ user }}</h1>
+	<h1>Witaj {{ user_name }}</h1>
 
 	<div class="column">
 		<form method="POST">{% csrf_token %}
-			{% if message == "" %}
+			{% if ui_message == "" %}
 				<p>{{ form.present_description.label_tag }}</p>
 			{% else %}
-				<p class="good-message">{{ message }}</p>
+				<p class="good-message">{{ ui_message }}</p>
 			{% endif %}
 			{{ form.present_description }}
 			<br/>
-			<button type="submit" >Zapisz</button>
+			<button type="submit" >Zapisz prezent!!!</button>
 		</form>
 	</div>
 
 	<div class="column">
-		{% if giving_user == "" %}
-		<p>Jeszcze nikogo nie wylosowałaś</p>
-		<a class="big-link" href="{% url 'describe.views.randomize' user_pk=user_pk %}">---> Losuj <---</a>
+		{% if giving_user_name == "" %}
+			<p>Jeszcze nikogo nie wylosowałaś</p>
+			<a class="big-link" href="{% url 'describe.views.randomize' user_pk=user_pk %}">---> Losuj <---</a>
 		{% else %}
-		<p>Kup prezent dla:</p>
-		<p>{{ giving_user }}</p>
-		<p>{{ giving_user_present }}</p>
+			<p>Kup prezent dla:</p>
+			<p class="important-msg">{{ giving_user_name }}</p>
+
+			{% if giving_user_present == "" %}
+				<p>{{ giving_user_name }} nie wybrał jeszcze swojego prezentu... :( Spróbuj później</p>
+			{% else %}
+				<p>{{ giving_user_present }}</p>
+			{% endif %}
 		{% endif %}
 	</div>
 

@@ -36,6 +36,11 @@ h1 {
     color: green;
 }
 
+.important-msg {
+    color: red;
+    font-size: 30px;
+}
+
 .big-link, .big-link:active, .big-link:hover, .big-link:visited {
     font-family: 'Coming Soon', cursive;
     font-size: 28px;
