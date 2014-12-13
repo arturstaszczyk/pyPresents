@@ -3,16 +3,29 @@ h1 {
     font-family: 'Coming Soon', cursive;
 }
 
+h3 {
+    color: #FCA205;
+    font-family: 'Coming Soon', cursive;
+}
+
 .page-header {
     background-color: #FCA205;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
+    height: 140px;
 }
 
 .page-header h1 {
     color: #ffffff;
     font-size: 36pt;
-    text-decoration: none;
+}
+
+.page-header h3 {
+    color: #ffffff;
+    font-size: 16px;
+    padding: 0px 0px 0px 0px;
+    margin: 3px 0px 0px 0px;
+
 }
 
 .page-header a {
@@ -51,5 +64,12 @@ h1 {
 .column {
     float: left;
     margin-right: 10px;
+    /*border: solid red 1px;*/
+}
+
+.fixed-width-column {
+    float: left;
+    margin-right: 10px;
+    /*border: solid red 1px;*/
     width: 40%;
 }

@@ -3,9 +3,7 @@
 {% block content %}
 
 <div class="content">
-	<h1>Witaj {{ user_name }}</h1>
-
-	<div class="column">
+	<div class="fixed-width-column">
 		<form method="POST">{% csrf_token %}
 			{% if ui_message == "" %}
 				<p>{{ form.present_description.label_tag }}</p>
@@ -18,7 +16,7 @@
 		</form>
 	</div>
 
-	<div class="column">
+	<div class="fixed-width-column">
 		{% if giving_user_name == "" %}
 			<p>Jeszcze nikogo nie wylosowałaś</p>
 			<a class="big-link" href="{% url 'describe.views.randomize' user_pk=user_pk %}">---> Losuj <---</a>

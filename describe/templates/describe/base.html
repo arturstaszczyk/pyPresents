@@ -19,7 +19,8 @@
 	<h1>Poczta św. Mikołaja :)</h1>
 
 	{% if is_authorized %}
-	<a href="{% url 'describe.views.logout_user' %}">Wyloguj</a>
+		<div class="column"><h3>Witaj {{ user_name }} | </h3></div>
+		<div class="column"><a href="{% url 'describe.views.logout_user' %}">Wyloguj</a></div>
 	{% endif %}
 </div>
 
