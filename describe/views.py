@@ -103,11 +103,19 @@ def randomize(request, user_pk):
     while counter < 100 and choosen_person == None:
         counter += 1
         giving_pk = _get_random_user_not_me(user_pk)
-
         if giving_pk == None:
             continue
 
+        giving_person = User.objects.get(pk=giving_pk)
+        user = User.objects.get(pk=user_pk)
+        user_groups = user.groups.values_list('name', flat=True)
+        giving_group = giving_person.groups.values_list('name', flat=True)
+
+        if giving_group[0] == user_groups[0]:
+            continue
+
         can_give = True
+
         for model in RandomizationModel.objects.all():
             if(model.giving == giving_pk):
                 can_give = False
