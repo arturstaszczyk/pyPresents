@@ -62,7 +62,7 @@ def user_page(request):
     person = _get_person_model(request)
     form = PersonForm(request.POST or None, instance=person)
     if _save_person_form_changes(request, form):
-        ui_message = "Gwiazdka przyjęła zamówienie. Prezent w trakcie pakowania..."
+        ui_message = "Aniołek przyjął zamówienie. Prezent w trakcie pakowania..."
 
     giving_user_data = _get_giving_data(request.user.pk)
     template_data = {'form': form,
