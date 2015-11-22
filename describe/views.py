@@ -9,10 +9,6 @@ from describe.forms import *
 from django.core.exceptions import ObjectDoesNotExist
 
 #*---------------------------------------------------------------*#
-def _get_giving_user_data(giving_user_pk):
-    pass
-
-#*---------------------------------------------------------------*#
 def _save_person_form_changes(request, form):
     saved = False
     if request.method == "POST" and form.is_valid():
@@ -99,8 +95,10 @@ def randomize(request, user_pk):
 
     random.seed()
     counter = 0
+    can_give = False
+
     choosen_person = None
-    while counter < 100 and choosen_person == None:
+    while counter < 500 and choosen_person == None:
         counter += 1
         giving_pk = _get_random_user_not_me(user_pk)
         if giving_pk == None:
@@ -114,14 +112,11 @@ def randomize(request, user_pk):
         if giving_group[0] == user_groups[0]:
             continue
 
-        can_give = True
-
         for model in RandomizationModel.objects.all():
             if(model.giving == giving_pk):
-                can_give = False
+                continue
 
-        if can_give:
-            choosen_person = User.objects.get(pk=giving_pk)
+        choosen_person = User.objects.get(pk=giving_pk)
 
     if choosen_person:
         _save_randomization_between(user_pk, choosen_person.pk)
