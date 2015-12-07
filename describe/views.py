@@ -112,9 +112,14 @@ def randomize(request, user_pk):
         if giving_group[0] == user_groups[0]:
             continue
 
+        already_taken = False;
         for model in RandomizationModel.objects.all():
             if(model.giving == giving_pk):
-                continue
+                already_taken = True
+                break
+
+        if already_taken:
+            continue
 
         choosen_person = User.objects.get(pk=giving_pk)
 
