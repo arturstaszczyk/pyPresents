@@ -86,7 +86,7 @@ def _get_random_user_not_me(user_pk):
 def _save_randomization_between(user_pk, giving_pk):
     randModel = RandomizationModel()
     randModel.user_id = user_pk
-    randModel.giving = giving_pk
+    randModel.giving_id = giving_pk
     randModel.save()
 
 #*---------------------------------------------------------------*#

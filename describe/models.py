@@ -19,12 +19,24 @@ class PersonModel(models.Model):
     def __str__(self):
         return self.get_user_name()
 
+    def __eq__(self, other):
+        return  self.user_id == other.user_id
+
+    def __ne__(self, other):
+        return not self.user_id == other.user_id
+
 class RandomizationModel(models.Model):
     user_id = models.IntegerField(unique=True)
-    giving = models.IntegerField(unique=True)
+    giving_id = models.IntegerField(unique=True)
 
     def __str__(self):
         me = User.objects.get(pk=self.user_id)
-        giving_person = User.objects.get(pk=self.giving)
+        giving_person = User.objects.get(pk=self.giving_id)
         str = PersonModel.get_user_name_static(me) + " -> " + PersonModel.get_user_name_static(giving_person)
         return str
+
+    def __eq__(self, other):
+        return  self.user_id == other.user_id and self.giving_id == other.giving
+
+    def __ne__(self, other):
+        return self.user_id != other.user_id or self.giving_id != other.giving
