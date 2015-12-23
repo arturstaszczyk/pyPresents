@@ -36,7 +36,7 @@ class RandomizationModel(models.Model):
         return str
 
     def __eq__(self, other):
-        return  self.user_id == other.user_id and self.giving_id == other.giving
+        return  self.user_id == other.user_id and self.giving_id == other.giving_id
 
     def __ne__(self, other):
-        return self.user_id != other.user_id or self.giving_id != other.giving
+        return self.user_id != other.user_id or self.giving_id != other.giving_id

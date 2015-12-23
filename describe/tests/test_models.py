@@ -47,3 +47,15 @@ class TestModels(TestCase):
 
         self.assertEquals(str(rand_model), self.user1.first_name + " " + self.user1.last_name + " -> " +
                                                 self.user2.first_name + " " + self.user2.last_name)
+
+    def test_randomization_model_cmp_eq(self):
+        rand_model1 = self._create_randomization_model(self.user1, self.user2)
+        rand_model2 = self._create_randomization_model(self.user1, self.user2)
+
+        self.assertEquals(rand_model1, rand_model2)
+
+    def test_randomization_model_cmp_ne(self):
+        rand_model1 = self._create_randomization_model(self.user1, self.user2)
+        rand_model2 = self._create_randomization_model(self.user1, self.user1)
+
+        self.assertNotEquals(rand_model1, rand_model2)
