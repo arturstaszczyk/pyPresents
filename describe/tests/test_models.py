@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from describe.models import PersonModel, RandomizationModel
+import django
 
 class TestModels(TestCase):
 
@@ -30,6 +31,13 @@ class TestModels(TestCase):
         self.assertEquals(person.get_user_name(), "John Doe")
         self.assertEquals(str(person), "John Doe")
 
+    def test_unique_person_model(self):
+        person1 = self._create_person_model(self.user1)
+        person2 = self._create_person_model(self.user1)
+
+        person1.save()
+        self.assertRaises(django.db.utils.IntegrityError, person2.save)
+
     def test_person_model_cmp_ne(self):
         person1 = self._create_person_model(self.user1)
         person2 = self._create_person_model(self.user2)
@@ -47,6 +55,13 @@ class TestModels(TestCase):
 
         self.assertEquals(str(rand_model), self.user1.first_name + " " + self.user1.last_name + " -> " +
                                                 self.user2.first_name + " " + self.user2.last_name)
+
+    def test_randomization_model_unique(self):
+        rand_model1 = self._create_randomization_model(self.user1, self.user2)
+        rand_model2 = self._create_randomization_model(self.user1, self.user2)
+
+        rand_model1.save()
+        self.assertRaises(django.db.utils.IntegrityError, rand_model2.save)
 
     def test_randomization_model_cmp_eq(self):
         rand_model1 = self._create_randomization_model(self.user1, self.user2)

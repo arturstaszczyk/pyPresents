@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class PersonModel(models.Model):
-    user_id = models.ForeignKey(User, unique=True)
+    user_id = models.OneToOneField(User)
     present_description = models.TextField(verbose_name='Opisz swoj wymarzony prezent')
 
     def present_desc(self):
