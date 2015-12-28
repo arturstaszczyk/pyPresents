@@ -112,7 +112,7 @@ def randomize(request, user_pk):
         if giving_group[0] == user_groups[0]:
             continue
 
-        already_taken = False;
+        already_taken = False
         for model in RandomizationModel.objects.all():
             if(model.giving == giving_pk):
                 already_taken = True
@@ -126,9 +126,9 @@ def randomize(request, user_pk):
     if choosen_person:
         _save_randomization_between(user_pk, choosen_person.pk)
 
-    return redirect('describe.views.user_page')
+    return redirect('user-page')
 
 #*---------------------------------------------------------------*#
 def logout_user(request):
     logout(request)
-    return redirect('/');
+    return redirect('user-page')

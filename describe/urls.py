@@ -4,7 +4,7 @@ import describe
 from describe import views
 
 urlpatterns = [
-    url(r'^$', views.user_page),
+    url(r'^$', views.user_page, name='user-page'),
     url(r'^accounts/login/$', auth_views.login),
     url(r'^logout/$', views.logout_user),
 

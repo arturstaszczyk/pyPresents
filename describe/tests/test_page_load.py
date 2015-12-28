@@ -12,13 +12,11 @@ class TestPageLoad(TestCase):
 
         self.assertListEqual(templates_used, templates_expected)
 
-
     def setUp(self):
         self.user1 = User.objects.create_user(username='john', email='test@test.pl', password='pass',
                                              first_name='John', last_name='Doe')
 
         self.user1_pk = self.user1.pk
-
 
     def test_login_status(self):
         client = Client()
