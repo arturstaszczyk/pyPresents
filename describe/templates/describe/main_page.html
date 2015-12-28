@@ -17,17 +17,17 @@
 	</div>
 
 	<div class="fixed-width-column">
-		{% if giving_user_name == "" %}
+		{% if receiver_name == "" %}
 			<p>Jeszcze nikogo nie wylosowałaś</p>
 			<a class="big-link" href="{% url 'describe.views.randomize' user_pk=user_pk %}">---> Losuj <---</a>
 		{% else %}
 			<p>Kup prezent dla:</p>
-			<p class="important-msg">{{ giving_user_name }}</p>
+			<p class="important-msg">{{ receiver_name }}</p>
 
-			{% if giving_user_present == "" %}
-				<p>{{ giving_user_name }} nie wybrał jeszcze swojego prezentu... :( Spróbuj później</p>
+			{% if receiver_wanted_present == "" %}
+				<p>{{ receiver_name }} nie wybrał jeszcze swojego prezentu... :( Spróbuj później</p>
 			{% else %}
-				<p>{{ giving_user_present }}</p>
+				<p>{{ receiver_wanted_present }}</p>
 			{% endif %}
 		{% endif %}
 	</div>
