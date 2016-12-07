@@ -1,5 +1,7 @@
 import random
 from django.shortcuts import render, redirect
+
+from describe.controllers.display_controller import DisplayController
 from describe.models import RandomizationModel
 from describe.persons_controller import PersonsController
 from django.contrib.auth.models import User
@@ -19,12 +21,14 @@ def user_page(request):
     if _save_person_form_changes(request, form):
         ui_message = "Zamówienie przyjęte. Prezent w trakcie pakowania..."
 
+    display_controller = DisplayController()
     giving_user_data = _get_receiver_data(request.user)
     template_data = {'form': form,
                      'user_name': person.get_user_name(),
                      'user_pk': person.user_id.pk,
                      'ui_message': ui_message,
-                     'is_authorized': request.user.is_authenticated() }
+                     'is_authorized': request.user.is_authenticated(),
+                     'display_edit_field': display_controller.can_user_describe_present()}
     template_data = dict(list(template_data.items()) + list(giving_user_data.items()))
 
     return render(request, 'describe/main_page.html', template_data)

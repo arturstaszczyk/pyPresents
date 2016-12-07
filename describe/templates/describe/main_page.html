@@ -4,6 +4,7 @@
 
 <div class="content">
 	<div class="fixed-width-column">
+		{% if display_edit_field %}
 		<form method="POST">{% csrf_token %}
 			{% if ui_message == "" %}
 				<p>{{ form.present_description.label_tag }}</p>
@@ -14,6 +15,9 @@
 			<br/>
 			<button type="submit" >Zapisz prezent!!!</button>
 		</form>
+		{% else %}
+		<p>Jeszcze nie można wybierać prezentów - nie wszyscy się wylosowali.</p>
+		{% endif %}
 	</div>
 
 	<div class="fixed-width-column">
@@ -21,9 +25,9 @@
 			<p>Jeszcze nikogo nie wylosowałaś</p>
 			<a class="big-link" href="{% url 'describe.views.randomize' user_pk=user_pk %}">---> Losuj <---</a>
 		{% else %}
-			<p>Kup prezent dla:</p>
+			<p>W tym roku wylosowałeś:</p>
 			<p class="important-msg">{{ receiver_name }}</p>
-
+			<p>Chciałby dostać pod choinkę:</p>
 			{% if receiver_wanted_present == "" %}
 				<p>{{ receiver_name }} nie wybrał jeszcze swojego prezentu... :( Spróbuj później</p>
 			{% else %}
@@ -31,7 +35,6 @@
 			{% endif %}
 		{% endif %}
 	</div>
-
 </div>
 
 {% endblock %}
