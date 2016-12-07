@@ -9,7 +9,6 @@ from describe.forms import *
 from describe.exceptions import CannotFindReceiver
 
 
-
 @login_required()
 def user_page(request):
     ui_message = ""
@@ -33,11 +32,15 @@ def user_page(request):
 
 def _save_person_form_changes(request, form):
     saved = False
-    if request.method == "POST" and form.is_valid():
-        person_instance = form.save(commit=False)
-        person_instance.user_id = request.user
-        person_instance.save()
+
+    present = form.instance.present_description
+    if form.is_valid() or (present != None and len(present) > 0):
         saved = True
+        if form.is_valid() and request.method == "POST":
+            person_instance = form.save(commit=False)
+            person_instance.user_id = request.user
+            person_instance.save()
+
 
     return saved
 
