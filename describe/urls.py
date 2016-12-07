@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import *
 from django.contrib.auth import views as auth_views
 import describe
 from describe import views
