@@ -26,13 +26,13 @@ class TestDisplayController (TestCase):
         RandomizationModel.objects.all().delete()
 
 
-    def test_should_not_display_edit_field(self):
+    def test_should_not_display_edit_field1(self):
 
         displayController = DisplayController()
         self.assertNotEquals(displayController.can_user_describe_present(), True)
 
 
-    def test_should_display_edit_field(self):
+    def test_should_display_edit_field1(self):
         displayController = DisplayController()
 
         randomization = RandomizationModel(user_id=self.user1.pk, giving_id=self.user2.pk)
@@ -41,3 +41,11 @@ class TestDisplayController (TestCase):
         randomization.save()
 
         self.assertEquals(displayController.can_user_describe_present(), True)
+
+    def test_should_not_display_edit_field2(self):
+        displayController = DisplayController()
+
+        randomization = RandomizationModel(user_id=self.user1.pk, giving_id=self.user2.pk)
+        randomization.save()
+
+        self.assertEquals(displayController.can_user_describe_present(), False)
