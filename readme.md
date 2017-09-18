@@ -1,9 +1,9 @@
 # PyPresents
 
 This app was written to draw a receiver of Xmass gift in my family :)
-Everybody can log in using users created in admin panel, describe the present they want to find under the Christmass tree,
+Everybody can log in using users created in admin panel, describe the present they want to find under the Christmass tree
 and draw another family member to buy gift for. <br>
-Basically it is e-letter for Santa :)
+Basically it is e-letter to Santa :)
 
 # Running app
 0) Ensure python 3.4 is installed and used as interpreter
