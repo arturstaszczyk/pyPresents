@@ -8,21 +8,22 @@ Basically it is e-letter for Santa :)
 # Running app
 0) Ensure python 3.4 is installed and used as interpreter
 1) Download source code
-2) Create migrations and migrate db (uses sqlite)
+
+2) Install requirements
+```
+pip install -r requirements.txt
+```
+
+3) Create migrations and migrate db (uses sqlite)
 
 ```
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-3) Create superuser
+4) Create superuser
 ```
 python manage.py createsuperuser
-```
-
-4) Install requirements
-```
-pip install -r requirements.txt
 ```
 
 5. Run server
