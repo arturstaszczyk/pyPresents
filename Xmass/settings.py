@@ -75,12 +75,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -95,6 +89,7 @@ TEMPLATES = [
 
 DEBUG = True
 STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
 
 # Sth for deployment
 #DATABASES['default'] =  dj_database_url.config()

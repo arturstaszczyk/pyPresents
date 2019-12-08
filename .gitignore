@@ -4,3 +4,5 @@ myenv
 *.iml
 Xmass/local_settings.py
 db.sqlite3
+python3_env
+staticfiles
