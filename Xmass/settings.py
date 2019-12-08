@@ -41,12 +41,23 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'Xmass.urls'
-
 WSGI_APPLICATION = 'Xmass.wsgi.application'
 
+SESSION_COOKIE_SECURE = True
+DEBUG = False
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'arturs.pythonanywhere.com']
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -62,18 +73,16 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
 
 TEMPLATES = [
     {
@@ -87,16 +96,13 @@ TEMPLATES = [
     }
 ]
 
-DEBUG = True
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
 
 # Sth for deployment
 #DATABASES['default'] =  dj_database_url.config()
 #
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 #
-# ALLOWED_HOSTS = ['*']
+# 
 #
 # try:
 #     from .local_settings import *
