@@ -30,3 +30,5 @@ python manage.py createsuperuser
 ```
 python manage.py runserver
 ```
+6. Deploy
+https://tutorial.djangogirls.org/pl/deploy/
